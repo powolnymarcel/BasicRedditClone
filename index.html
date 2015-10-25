@@ -6,7 +6,14 @@
 </head>
 <body ng-app="basicRedditClone" ng-controller="ControlleurPrincipal">
 <div>
-    {{}}
+    <div ng-repeat="post in posts">
+        Le post : {{post.titre}} a {{post.votesPositifs}} vote<ng-pluralize count="post.votesPositifs"
+                                                                            when="{'0'     : '',
+                                                                                    'one'  : '',
+                                                                                    'other': 's'
+                                                                                    }">
+    </ng-pluralize>
+    </div>
 </div>
 </body>
 </html>
