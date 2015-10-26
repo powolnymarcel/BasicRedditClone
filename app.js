@@ -34,7 +34,7 @@ app
             if(!$scope.titre || $scope.titre === '') { return; }
             // Ajouter au le post au tableau de posts
             $scope.posts.push({
-                id:($scope.posts.length)+1,
+                id:$scope.posts.length,
                 titre: $scope.titre,
                 description:$scope.description,
                 votesPositifs: 0,
