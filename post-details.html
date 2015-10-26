@@ -3,9 +3,13 @@
     <h3>
         {{post.titre}}
     </h3>
-    <a href="{{post.lien}}">
+    <small><u>Posté le :</u> {{post.date}}<br/>
+    </small>
+    <br/>
+    <u>Url :</u><a href="{{post.lien}}">
         {{post.lien}}
-    </a><br/>
+    </a><br/><br/>
+    <u>Description :</u><br/>
     <p>{{post.description}}</p>
 </div>
 

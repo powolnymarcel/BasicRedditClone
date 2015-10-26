@@ -28,6 +28,7 @@ app
         // Vas chercher dans le factory les data
         $scope.posts = postsFactory.posts;
         console.log($scope.posts);
+        var date= new Date;
         // Fn pour ajouter un post
         $scope.ajouterPost = function(){
             // Eviter que le user laisse le champs vide
@@ -40,6 +41,7 @@ app
                 votesPositifs: 0,
                 voteNegatifs: 0,
                 lien:$scope.lien,
+                date:date,
                 comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
@@ -61,11 +63,17 @@ app
         $scope.DiminuerVotePositif = function(post) {
             post.voteNegatifs += 1;
         };
-        var orderBy = $filter('orderBy');
-        //cette fn se retrouve dans le html, elle est appelée et recoit l'ordre de tri
-        $scope.order = function(laFaconDeTrier) {
-            $scope.posts = orderBy($scope.posts, laFaconDeTrier);
-        };
+
+        $scope.sortType     = 'date'; // set the default sort type
+        $scope.sortReverse  = false;  // set the default sort order
+
+
+
+      //  var orderBy = $filter('orderBy');
+      //  //cette fn se retrouve dans le html, elle est appelée et recoit l'ordre de tri
+      //  $scope.order = function(laFaconDeTrier) {
+      //      $scope.posts = orderBy($scope.posts, laFaconDeTrier);
+      //  };
 
 }])
     // *****************************************************************************************************        PostsCtrl
@@ -124,43 +132,43 @@ app
 
            var o={
                posts:[
-                {"id":0,"titre": 'post 0',"lien":"http://www.google.fr", "description":"Je suis 0 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,
-                    comments: [
+                {"id":0,"titre": ' la chasse',"lien":"http://www.google.fr", "description":"Je suis 0 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,
+                    date:"2015-10-26T13:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":1,"titre": 'post 1',"lien":"http://www.google.fr", "description":"Je suis 1 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,
-                    comments: [
+                {"id":1,"titre": ' la voiture',"lien":"http://www.google.fr", "description":"Je suis 1 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,
+                    date:"2015-10-26T16:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":2,"titre": 'post 2',"lien":"http://www.google.fr", "description":"Je suis 2 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 66,
-                    comments: [
+                {"id":2,"titre": ' la course',"lien":"http://www.google.fr", "description":"Je suis 2 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 66,
+                    date:"2015-10-26T17:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":3,"titre": 'post 3',"lien":"http://www.google.fr", "description":"Je suis 3 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 15,
-                    comments: [
+                {"id":3,"titre": ' l\'aviation',"lien":"http://www.google.fr", "description":"Je suis 3 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 15,
+                    date:"2015-10-26T23:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":4,"titre": 'post 4',"lien":"http://www.google.fr", "description":"Je suis 4 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  9,
-                    comments: [
+                {"id":4,"titre": ' la danse',"lien":"http://www.google.fr", "description":"Je suis 4 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  9,
+                    date:"2015-10-26T21:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":5,"titre": 'post 5',"lien":"http://www.google.fr", "description":"Je suis 5 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":111,"votesPositifs":4,
-                    comments: [
+                {"id":5,"titre": ' la cuisine',"lien":"http://www.google.fr", "description":"Je suis 5 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":111,"votesPositifs":4,
+                    date:"2015-10-26T11:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":6,"titre": 'post 6',"lien":"http://www.google.fr", "description":"Je suis 6 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  0,
-                    comments: [
+                {"id":6,"titre": ' le sport',"lien":"http://www.google.fr", "description":"Je suis 6 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  0,
+                    date:"2015-10-26T06:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":7,"titre": 'post 7',"lien":"http://www.google.fr", "description":"Je suis 7 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":15,"votesPositifs": 1,
-                    comments: [
+                {"id":7,"titre": ' le web',"lien":"http://www.google.fr", "description":"Je suis 7 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":15,"votesPositifs": 1,
+                    date:"2015-10-26T03:03:20.711Z",comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]}

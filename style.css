@@ -2,7 +2,12 @@
     font-size: 30px;
     padding: 10px;
 }
-
+.tags{
+    padding: 19px;
+}
+.tags>a{
+    margin-left: 10px;
+}
 .bouton:hover{
     cursor: pointer;
 }
