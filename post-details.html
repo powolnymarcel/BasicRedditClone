@@ -10,8 +10,9 @@
 
 <div ng-repeat="comment in post.comments | orderBy:'-votesPositifs'">
     <span ng-click="AugmenterVotePositif(comment)" class="glyphicon glyphicon-thumbs-up bouton" ></span>
-    <span ng-click="AugmenterVotePositif(comment)" class="glyphicon glyphicon-thumbs-down bouton" ></span>
-    {{comment.votesPositifs}} - by {{comment.auteur}}
+    <span ng-click="DiminuerVotePositif(comment)" class="glyphicon glyphicon-thumbs-down bouton" ></span>
+    {{comment.votePositifs}} - by {{comment.auteur}}
+    {{comment.voteNegatifs}} - by {{comment.auteur}}
     <span style="font-size:20px; margin-left:10px;">
       {{comment.body}}
     </span>
@@ -25,7 +26,8 @@
         <input type="text"
                class="form-control"
                placeholder="Comment"
-               ng-model="body">
+               ng-model="body"
+                required="required">
     </div>
     <button type="submit" class="btn btn-primary">Post</button>
 </form>

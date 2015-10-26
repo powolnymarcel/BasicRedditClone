@@ -15,8 +15,8 @@ app
                     controller: 'ControlleurPrincipal'
                 })
                 .state('posts', {
-                    url: '/posts/{id}',
-                    templateUrl: 'posts.html',
+                    url: '/posts/:id',
+                    templateUrl: 'post-details.html',
                     controller: 'PostsCtrl'
                 });
 
@@ -24,17 +24,17 @@ app
         }])
     //*******************************************************************************************************************************CONTROLLEUR
     // ***************************************************************************************ControlleurPrincipal
-    .controller('ControlleurPrincipal', ['$scope','$filter','posts',function($scope,$filter,posts){
+    .controller('ControlleurPrincipal', ['$scope','$filter','postsFactory',function($scope,$filter,postsFactory){
         // Vas chercher dans le factory les data
-        $scope.posts = posts.posts;
-console.log($scope.posts);
+        $scope.posts = postsFactory.posts;
+        console.log($scope.posts);
         // Fn pour ajouter un post
         $scope.ajouterPost = function(){
             // Eviter que le user laisse le champs vide
             if(!$scope.titre || $scope.titre === '') { return; }
             // Ajouter au le post au tableau de posts
             $scope.posts.push({
-                id:($scope.posts.length)+1,
+                id:'gg',
                 titre: $scope.titre,
                 description:$scope.description,
                 votesPositifs: 0,
@@ -70,12 +70,13 @@ console.log($scope.posts);
 }])
     // *****************************************************************************************************        PostsCtrl
     // On crée un controlleur pour les posts, à ce controlleur on injecte le factory posts pour avoir les data dispo
-    .controller('PostsCtrl', ['$scope','$stateParams','posts', function($scope, $stateParams, posts){
+    .controller('PostsCtrl', ['$scope','$stateParams','postsFactory', function($scope, $stateParams, postsFactory){
         // Pour avoir l'id du post(bien faire attention au pluriel 's' ou pas 's')
-        $scope.post = posts.posts[$stateParams.id];
+        $scope.post =  postsFactory.posts[$stateParams.id];
+        console.log($scope.post);
         $scope.ajoutCommentaire = function(){
             // Si commentaire vide, ne fait rien
-            if($scope.body === '') { return; }
+            if($scope.body === '' ||null) { return; }
             $scope.post.comments.push({
                 body: $scope.body,
                 auteur: 'user',
@@ -84,7 +85,13 @@ console.log($scope.posts);
             });
             $scope.body = '';
         };
-
+        $scope.AugmenterVotePositif = function(comment) {
+            comment.votePositifs += 1;
+        };
+        // Fn pour diminuer le vote d'un post
+        $scope.DiminuerVotePositif = function(comment) {
+            comment.voteNegatifs += 1;
+        };
     }])
 
 
@@ -110,46 +117,55 @@ console.log($scope.posts);
     //... someone trying to have persistent data in his or her controller. That’s just not the purpose of a controller
     //For memory purposes, controllers are instantiated only when they are needed and discarded when they are not. Because of this, every time you switch a route or reload a page, Angular
     //cleans up the current controller. Services however provide a means for keeping data around for the lifetime of an application while they also can be used across different controllers in a consistent manner.
-    .factory('posts', [function(){
+    .factory('postsFactory', [function(){
 
         //You'll note that we could have simply exported the posts array directly,
         // however, by exporting an object that contains the posts array we can add new objects and methods to our services in the future.
-        var o = {
-            posts: [
-                {"id":0,"titre": 'post 0',"lien":"http://www.google.fr", "description":"Je suis 0 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,comments: [
+
+           var o={
+               posts:[
+                {"id":0,"titre": 'post 0',"lien":"http://www.google.fr", "description":"Je suis 0 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":1,"titre": 'post 1',"lien":"http://www.google.fr", "description":"Je suis 1 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,comments: [
+                {"id":1,"titre": 'post 1',"lien":"http://www.google.fr", "description":"Je suis 1 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 55,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":2,"titre": 'post 2',"lien":"http://www.google.fr", "description":"Je suis 2 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 66,comments: [
+                {"id":2,"titre": 'post 2',"lien":"http://www.google.fr", "description":"Je suis 2 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 66,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":3,"titre": 'post 3',"lien":"http://www.google.fr", "description":"Je suis 3 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 15,comments: [
+                {"id":3,"titre": 'post 3',"lien":"http://www.google.fr", "description":"Je suis 3 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs": 15,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":4,"titre": 'post 4',"lien":"http://www.google.fr", "description":"Je suis 4 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  9,comments: [
+                {"id":4,"titre": 'post 4',"lien":"http://www.google.fr", "description":"Je suis 4 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  9,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":5,"titre": 'post 5',"lien":"http://www.google.fr", "description":"Je suis 5 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":111,"votesPositifs":4,comments: [
+                {"id":5,"titre": 'post 5',"lien":"http://www.google.fr", "description":"Je suis 5 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":111,"votesPositifs":4,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":6,"titre": 'post 6',"lien":"http://www.google.fr", "description":"Je suis 6 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  0,comments: [
+                {"id":6,"titre": 'post 6',"lien":"http://www.google.fr", "description":"Je suis 6 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":1,"votesPositifs":  0,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]},
-                {"id":7,"titre": 'post 7',"lien":"http://www.google.fr", "description":"Je suis 7 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":15,"votesPositifs": 1,comments: [
+                {"id":7,"titre": 'post 7',"lien":"http://www.google.fr", "description":"Je suis 7 la description du post, je peux faire autant de caractères que je veux, je suis la description !!!!!! ", "voteNegatifs":15,"votesPositifs": 1,
+                    comments: [
                     {auteur: 'Joe', body: 'Cool post!', votePositifs: 0,voteNegatifs: 0},
                     {auteur: 'Bob', body: 'Great idea but everything is wrong!', votePositifs: 0,voteNegatifs: 0}
                 ]}
             ]
-        };
+    };
         return o;
 }]);
 
