@@ -6,97 +6,14 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <!--******** On nomme l'app avec ng-app qui sera valable sur tout le body et on y attache un controlleur  ************ -->
-<body ng-app="basicRedditClone" ng-controller="ControlleurPrincipal" class="container">
-<header>
-    <div class="row">
-        <div class="col-md-12" style="text-align: center">
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ajouter un post</button>
-        </div>
-    </div>
+<body ng-app="basicRedditClone" class="container">
 
-    <tr>
-        <th>
-            <a href="" ng-click="order('-votesPositifs')"><span class="glyphicon glyphicon-chevron-down ">Votes</span></a> &nbsp;&nbsp;&nbsp;
-            <a href="" ng-click="order('votesPositifs')"><span class="glyphicon glyphicon-chevron-up ">Votes</span></a>
-        </th>
-    </tr>
+<ui-view></ui-view>
 
-
-    <!--******** Dans le controlleur on a un scope qui est un tableau JSON on boucle dessus, on trie par Votes positifs et on ajoute une directive plutalize pour mettre un "S" quand il y a plusieurs posts ************ -->
-    <div class="well well-sm"><strong><span class="glyphicon glyphicon-bookmark"></span>Posts</strong></div>
-    <section ng-repeat="post in posts">
-        <!-- Debut article-->
-        <article class="article"><u>Le post : <strong>{{post.titre}}</strong></u>
-            <p>
-                {{post.description | limitTo:80}}{{post.description.length >80 ? '...' : ''}}
-            </p>
-            &nbsp; <span ng-click="AugmenterVotePositif(post)" class="glyphicon glyphicon-thumbs-up boutonPlus" ></span>
-            &nbsp; <span ng-click="DiminuerVotePositif(post)" class="glyphicon glyphicon-thumbs-down boutonPlus" ></span>
-            <div class="well well-sm"><strong>{{post.votesPositifs}} vote<ng-pluralize count="post.votesPositifs"
-                                                                                       when="{'0'     : '',
-                                                                                    'one'  : '',
-                                                                                    'other': 's'}">
-                                                                                    </ng-pluralize></strong>
-            </div>
-        </article>
-        <!-- Fin article-->
-        <hr/>
-    </section>
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Ajouter un post</h4>
-                </div>
-                <div class="modal-body">
-                    <form ng-submit="ajouterPost()">
-                        <div class="container">
-                            <div class="row">
-                                <form role="form">
-                                    <div class="col-lg-6">
-                                        <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Champs obligatoires</strong></div>
-                                        <div class="form-group">
-                                            <label for="titre">Titre du post </label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="titre" id="titre" placeholder="Le titre" ng-model="titre" required>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="lien">Lien à partager</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="lien" name="lien" placeholder="Le lien" ng-model="lien" required>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Description</label>
-                                            <div class="input-group">
-                                                <textarea name="description" id="description" class="form-control" rows="5" ng-model="description"></textarea>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-list-alt"></span></span>
-                                            </div>
-                                        </div>
-                                        <input type="submit" name="submit" id="submit" value="Envoyer" class="btn btn-info pull-right">
-                                    </div>
-                                </form>
-                                <div class="col-lg-5 col-md-push-1">
-                                </div>
-                            </div>
-                        </div>
-                    </form>                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--  Fin de modal -->
-</header>
 </body>
 </html>

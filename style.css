@@ -1,6 +1,12 @@
-.boutonPlus:hover{
+.bouton{
+    font-size: 30px;
+    padding: 10px;
+}
+
+.bouton:hover{
     cursor: pointer;
 }
 .article{
     margin: 10px 10px 10px 10px;
+    padding: 25px 25px 25px 25px;
 }
